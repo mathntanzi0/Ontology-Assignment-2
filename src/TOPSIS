@@ -1,0 +1,36 @@
+public static class TOPSIS {
+    
+    private double[][] normalizeDecisionMatrix(int[][] decisionMatrix){
+        return null;
+    }
+
+    private double[][] weightedNormalizedMatrix(double[][] normalizeDecisionMatrix){
+        return null;
+    }
+
+    private double[][] positiveNegativeIdeal(){
+        return null
+    }
+
+    private double[][] distancesPositiveNegative(){
+        return null;
+    }
+
+    private double[] relativeCloseness(){
+        return null;
+    }
+
+    public List<RankingResult> Rank(int[][] decisionMatrix){
+        return null
+    }
+}
+
+public class RankingResult {
+    private String string;
+    private int number;
+
+    public RankingResult(String string, int number) {
+        this.string = string;
+        this.number = number;
+    }
+}
