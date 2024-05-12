@@ -1,6 +1,41 @@
+
 public class App {
     public static void main(String[] args) throws Exception {
         System.out.println("Hallo, wie gehts?");
         //what u say boss
-    }
-}
+         TOPSIS topsis=new TOPSIS("dataset.txt");
+         
+    }}
+
+
+
+/*For Testing Purposes
+ * 
+ *  
+        double [][]dm= topsis.buildDecisonMatrix("dataset.txt");
+        /* 
+        for (int r=0;r<dm.length;r++){
+            for (int c=0;c<dm[0].length;c++){
+      
+                System.out.print(String.valueOf(dm[r][c])+"  ");
+            }
+            System.out.println();
+        }*/
+
+        //double[][] normalised_dm= topsis.normalizeDecisionMatrix(dm);
+        /* 
+        for (int r=0;r<dm.length;r++){
+            for (int c=0;c<normalised_dm[0].length;c++){
+      
+                System.out.print(String.valueOf(normalised_dm[r][c])+"  ");
+    
+            }
+            System.out.println();
+        }
+        double[] idealBest=positiveIdeal(normalised_dm);
+       
+        for(double x: idealBest ){
+            System.out.print(x+" ");
+        }*/
+
+ 

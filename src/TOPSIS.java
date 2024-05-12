@@ -9,8 +9,15 @@ public class TOPSIS {
     RankingList rankinglist;
 
     public TOPSIS(String fileName){
+        this.fileName=fileName;
+        apply_TOPSIS(fileName);
+
+       
+    }
+    public void apply_TOPSIS(String fileName){
+
         rankinglist=new RankingList();
-        
+
         this.fileName=fileName;
         try {
             this.decisionMatrix=buildDecisonMatrix(fileName);
@@ -20,18 +27,21 @@ public class TOPSIS {
 
         this.normalizeDecisionMatrix=normalizeDecisionMatrix(decisionMatrix);
         //weightedNormalizedMatrix(normalizeDecisionMatrix)
-        double[]best_solutions=positiveIdeal(normalizeDecisionMatrix);
-        double[]worst_solutions=negativeIdeals(decisionMatrix);
-
+        
+        //This Function gets the Positive Ideal solutions and then calculates the distance of each metric of the ontolgoy from the ideal solution
         double [] distanceFromPos=distancesFromPositiveIdeals(normalizeDecisionMatrix);
+        
+        //This Function gets the Negative Ideal solutions and then calculates the distance of each metric of the ontolgoy from the ideal solution
         double[] distanceFromNeg=distancesFromNegativeIdeals(decisionMatrix);
         
-        double[] relativeCloseness=relativeCloseness(distanceFromPos, distanceFromNeg);
+        relativeCloseness(distanceFromPos, distanceFromNeg);
+        orderRankingList();
+        printRankingList(getRankings());
 
 
-
-       
     }
+
+
 
     public double[][] buildDecisonMatrix(String fileName) throws Exception{
 
@@ -131,13 +141,13 @@ public double[][] weightedNormalizedMatrix(double[][] normalizeDecisionMatrix){
         return positiveIdeals;
 
     }
-    //Find the Ideal Worst Solution for each metric of the ontology which is the min value in that column
+    //Find the Ideal Worst Solution for each metric of which is the min value in that column
     public double[] negativeIdeals(double[][]dm){
 
         //Store our Ideal best solutions in a 1d array
         double[] negativeIdeals= new double[dm[0].length];
         double min;
-        //We need to find the best in each COLUMN
+        //We need to find the worst in each COLUMN
         for (int c=0;c<dm[0].length;c++){
 
             min=dm[c][0];
@@ -194,23 +204,36 @@ public double[][] weightedNormalizedMatrix(double[][] normalizeDecisionMatrix){
     }
 
    
-    public double[] relativeCloseness(double[] distanceFromNeg,double[] distanceFromPos){
+    public void relativeCloseness(double[] distanceFromNeg,double[] distanceFromPos){
 
-        //RelativeCloseness Ci for each ontology,is computed based on distance from pos and neg ideal solutions
+        //Relative Closeness Ci for each ontology,is computed based on distance from pos and neg ideal solutions
+
+        //Use a 1d array to store all relveant closeness scores
         double[] closeness=new double[distanceFromNeg.length];
 
         for(int i=0;i<closeness.length;i++){
             closeness[i]=distanceFromNeg[i]/(distanceFromNeg[i]+distanceFromPos[i]);
-            rankinglist.getOntologies().get(i).setRelativeCloseness(closeness[i]);
+            rankinglist.getOntologies().get(i).setRelativeCloseness(closeness[i]);//Add the closeness score to The relevent Ontology
         }
-        return closeness;
     
     }
     //Rank the Onotolgy list according to their relative closeness
 
     public ArrayList<Ontology> getRankings(){
-        rankinglist.sortRankingList();
         return rankinglist.getOntologies();
+    }
+
+    //Print Ranking Lst
+    public void printRankingList(ArrayList<Ontology>rankings){
+        for(Ontology o: rankings){
+            System.out.println(o.getName()+"  "+o.getRelativeCloseness());
+        }
+
+
+    }
+    //Order the Ontologies according to their relatviness CLoseness
+    public void orderRankingList(){
+        this.rankinglist.sortRankingList();
     }
 }
 

@@ -14,6 +14,9 @@
     public void setRelativeCloseness(double relativeCloseness){
         this.relativeCloseness =relativeCloseness;
     }
+    public String getName(){
+        return this.name;
+    }
 
     public double getRelativeCloseness(){
         return relativeCloseness;
