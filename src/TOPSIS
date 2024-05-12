@@ -1,3 +1,4 @@
+//Dont think we need this file
 public static class TOPSIS {
     
     private double[][] normalizeDecisionMatrix(int[][] decisionMatrix){
