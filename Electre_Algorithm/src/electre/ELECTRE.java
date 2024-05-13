@@ -86,9 +86,9 @@ public class ELECTRE {
     }
 	
 	public void calcWeights(double[][] normalizeDecisionMatrix) {
-		double[] weights = new double[50];
+		double[] weights = new double[11];
 		double numerator, denominator = 0.0;
-		double[] num = new double[50];
+		double[] num = new double[11];
 		
 		for (int i = 0; i < 50; i++) {
 			double temp = normalizeDecisionMatrix[i][0];
