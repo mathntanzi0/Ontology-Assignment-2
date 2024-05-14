@@ -132,7 +132,7 @@ public class Electre{
 
         for (int r = 0; r < numRows; r++) {
             for (int c = 0; c < numCols; c++) {
-                weightedMatrix[r][c] = normalizeDecisionMatrix[r][c] * weights[c];
+                weightedMatrix[r][c] = normalizeDecisionMatrix[r][c] * (1/11);
                 //System.out.print(weightedMatrix[r][c]+"\t");
             }
             //System.out.println("");
