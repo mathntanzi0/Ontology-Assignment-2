@@ -25,8 +25,6 @@ public class TOPSIS {
     }
     public void apply_TOPSIS(String fileName){
 
-        rankinglist=new RankingList();
-
         this.fileName=fileName;
         try {
             this.decisionMatrix= Utility.getDecisionMatrixFromFile(new File(fileName));
@@ -173,6 +171,6 @@ public class TOPSIS {
      * Orders the ranking list of ontologies based on their relative closeness scores.
      */
     public void orderRankingList(){
-        this.rankinglist.sortRankingList();
+        App.rankinglist.sortRankingList();
     }
 }
