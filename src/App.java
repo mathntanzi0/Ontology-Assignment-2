@@ -1,11 +1,11 @@
 
 public class App {
+
+    public static RankingList rankinglist = new RankingList();
     public static void main(String[] args) throws Exception {
-        System.out.println("Hallo, wie gehts?");
-        //what u say boss
-         TOPSIS topsis=new TOPSIS("dataset.txt");
-         
-    }}
+        TOPSIS topsis=new TOPSIS("dataset.txt");
+    }
+}
 
 
 
