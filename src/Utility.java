@@ -109,7 +109,7 @@ public class Utility {
     * @param normalizeDecisionMatrix The normalized decision matrix.
     * @return The weighted normalized matrix.
     */
-    public double[][] weightedNormalizedMatrix(double[][] normalizeDecisionMatrix){
+    public static double[][] weightedNormalizedMatrix(double[][] normalizeDecisionMatrix){
         double[] weights = calculateWeights(normalizeDecisionMatrix);
         return weightedNormalizedMatrix(normalizeDecisionMatrix, weights);
     }

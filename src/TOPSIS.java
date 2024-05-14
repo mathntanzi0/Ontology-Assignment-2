@@ -35,12 +35,14 @@ public class TOPSIS {
 
         this.normalizeDecisionMatrix= Utility.normalizeDecisionMatrix(decisionMatrix);
         //weightedNormalizedMatrix(normalizeDecisionMatrix)
+
+        double[][] weightedNormalizeDecisionMatrix = Utility.weightedNormalizedMatrix(normalizeDecisionMatrix);
         
         //This Function gets the Positive Ideal solutions and then calculates the distance of each metric of the ontolgoy from the ideal solution
-        double [] distanceFromPos=distancesFromPositiveIdeals(normalizeDecisionMatrix);
+        double [] distanceFromPos=distancesFromPositiveIdeals(weightedNormalizeDecisionMatrix);
         
         //This Function gets the Negative Ideal solutions and then calculates the distance of each metric of the ontolgoy from the ideal solution
-        double[] distanceFromNeg=distancesFromNegativeIdeals(decisionMatrix);
+        double[] distanceFromNeg=distancesFromNegativeIdeals(weightedNormalizeDecisionMatrix);
         
         relativeCloseness(distanceFromPos, distanceFromNeg);
         orderRankingList();
