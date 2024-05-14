@@ -301,4 +301,28 @@ public class Electre{
         return AggregateDominanceMatrix;
     }
 
+
+    public double[] computeScores(double[][] decisionMatrix) {
+    	int numRows = decisionMatrix.length;
+    	int numColumns = decisionMatrix[0].length;
+    	double[] scores = new double[numAlternatives];
+
+    	for (int k = 0; k < numRows; k++) {
+        	double score = 0.0;
+        	for (int i = 0; i < numColumns; i++) {
+            		double sumRows = 0.0;
+            		double sumCols = 0.0;
+            		for (int j = 0; j < numRows; j++) {
+                		sumRows += decisionMatrix[k][i];
+                		sumCols += decisionMatrix[j][k];
+            		}
+            		score += sumRows - sumCols;
+        	}
+        	scores[k] = score;
+    	}
+    	return scores; //need to order the scores (the lower the score, the higher the rank)
+    }
+
+
+
 }//class
