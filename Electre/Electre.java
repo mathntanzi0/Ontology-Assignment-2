@@ -94,18 +94,17 @@ public class Electre{
 	}//eof
 	
 	public  double[][] normalizeDecisionMatrix(double[][] decisionMatrix){
-        double []normalising_constant= calculateNormalisingConstants(decisionMatrix);
+        double []normalising_constant = calculateNormalisingConstants(decisionMatrix);
 
         //Divide Each element of the Decision Matrix by the Normalising Constant of its Column
-        double[][] normalizedDecisionMatrix=new double[decisionMatrix.length][decisionMatrix[0].length];
+        double[][] normalizedDecisionMatrix = new double[decisionMatrix.length][decisionMatrix[0].length];
 
-        for (int c=0;c<decisionMatrix[0].length;c++){
-
-            for (int r=0;r<decisionMatrix.length;r++){
+        for (int r=0;r<decisionMatrix.length;r++){
+            for (int c=0;c<decisionMatrix[r].length;c++){
                 normalizedDecisionMatrix[r][c]= decisionMatrix[r][c]/normalising_constant[c];
-                System.out.print(normalizedDecisionMatrix[r][c]+"\t");
+                //System.out.print(normalizedDecisionMatrix[r][c]+"\t");
             }
-            System.out.println("");
+            //System.out.println("");
         }
         return normalizedDecisionMatrix;
 
