@@ -149,7 +149,7 @@ public class Electre{
     public static double[] calculateWeights(double[][] normalizeDecisionMatrix) {
         int numCriteria = normalizeDecisionMatrix[0].length;
         int numAlternatives = normalizeDecisionMatrix.length;
-
+/*
         //Calculate geometric mean
         double[] geometricMeans = new double[numCriteria];
         for (int j = 0; j < numCriteria; j++) {
@@ -164,8 +164,12 @@ public class Electre{
         double[] normalizedGeometricMeans = new double[numCriteria];
         for (int j = 0; j < numCriteria; j++)
             normalizedGeometricMeans[j] = geometricMeans[j] / sumGeometricMeans;
-
-        return normalizedGeometricMeans;
+        */
+	    double[] w = new double[11];
+        for (int i = 0; i < w.length; i++) {
+            w[i] = (double)(1.0/11.0);
+        }
+        return w;
     }
 
     public HashMap<String, ArrayList<Integer>> getConcordance(double[][] weighteddMatrix){
