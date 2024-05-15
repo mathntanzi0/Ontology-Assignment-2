@@ -10,7 +10,6 @@ import java.util.*;
  * @author Muhammad Shah
  * @author Sithembiso Ntanzi
  * @author Yurvan Ramjan
- * @author ChatGPT
  * */
 
  
