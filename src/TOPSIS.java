@@ -39,7 +39,8 @@ public class TOPSIS {
         //weightedNormalizedMatrix(normalizeDecisionMatrix)
 
         double[][] weightedNormalizeDecisionMatrix = Utility.weightedNormalizedMatrix(normalizeDecisionMatrix);
-        
+        double[] positiveIdeal=positiveIdeal(weightedNormalizeDecisionMatrix);
+        double[] negativeIdeal=negativeIdeals(weightedNormalizeDecisionMatrix);
         //This Function gets the Positive Ideal solutions and then calculates the distance of each metric of the ontolgoy from the ideal solution
         double [] distanceFromPos=distancesFromPositiveIdeals(weightedNormalizeDecisionMatrix);
         
@@ -49,23 +50,23 @@ public class TOPSIS {
         double[] closenessScores=relativeCloseness(distanceFromPos, distanceFromNeg);
         orderRankingList();
         printRankingList(getRankings());
-        displayOutputToFile(weightedNormalizeDecisionMatrix, distanceFromPos, distanceFromPos, distanceFromPos, distanceFromNeg,closenessScores);
+        displayOutputToFile(weightedNormalizeDecisionMatrix, positiveIdeal, negativeIdeal, distanceFromPos, distanceFromNeg,closenessScores);
     }
     /**
      * Calculates the positive ideal solution by finding the best value in each column of the decision matrix.
      * 
-     * @param ndm The decision matrix.
+     * @param wnm The  weighted normalised matrix.
      * @return The positive ideal solution.
      */
-    public  double[] positiveIdeal(double[][]ndm){
-        double[] positiveIdeals= new double[ndm[0].length];
+    public  double[] positiveIdeal(double[][]wnm){
+        double[] positiveIdeals= new double[wnm[0].length];
         double max;
         //We need to find the best in each COLUMN
-        for (int c=0;c<ndm[0].length;c++){
-            max=ndm[c][0];
-            for (int r=0;r<ndm.length;r++){
-                if(ndm[r][c] > max)
-                    max=ndm[r][c];
+        for (int c=0;c<wnm[0].length;c++){
+            max=wnm[0][c];
+            for (int r=0;r<wnm.length;r++){
+                if(wnm[r][c]>= max)
+                    max=wnm[r][c];
             }
             //Ideal best for the column is the max element we find
             positiveIdeals[c]=max;
@@ -75,42 +76,43 @@ public class TOPSIS {
     /**
      * Calculates the negative ideal solution by finding the worst value in each column of the decision matrix.
      * 
-     * @param ndm The normalized decision matrix.
+     * @param wnm The normalized weighted decision matrix.
      * @return The negative ideal solution.
      */
-    public double[] negativeIdeals(double[][]ndm){
+    public double[] negativeIdeals(double[][]wnm){
         //Store our Ideal best solutions in a 1d array
-        double[] negativeIdeals= new double[ndm[0].length];
+        double[] negativeIdeals= new double[wnm[0].length];
         double min;
         //We need to find the worst in each COLUMN
-        for (int c=0;c<ndm[0].length;c++){
+        for (int c=0;c<wnm[0].length;c++){
 
-            min=ndm[c][0];
-            for (int r=0;r<ndm.length;r++){
-                if(ndm[r][c]<min)
-                    min=ndm[r][c];
+            min=wnm[0][c];
+            for (int r=0;r<wnm.length;r++){
+                if(wnm[r][c]<min)
+                    min=wnm[r][c];
             }
             //Ideal worst for the column is the min element we find
             negativeIdeals[c]=min;
         }
+       
         return negativeIdeals;
     }
     /**
      * Calculates the distances of alternatives from the positive ideal solution.
      * 
-     * @param ndm The normalized decision matrix.
+     * @param wnm The normalized weighted matrix.
      * @return The distances of alternatives from the positive ideal solution.
      */
-    public double[]distancesFromPositiveIdeals(double[][] ndm){
-        double[] posIdeals=positiveIdeal(ndm);
+    public double[]distancesFromPositiveIdeals(double[][] wnm){
+        double[] posIdeals=positiveIdeal(wnm);
         double distance;
-        double[] distancesFromIdeal=new double[ndm.length];
+        double[] distancesFromIdeal=new double[wnm.length];
 
-        for (int r=0;r<ndm.length;r++){
+        for (int r=0;r<wnm.length;r++){
             distance=0;
-          for (int c=0;c<ndm[0].length;c++){
+          for (int c=0;c<wnm[0].length;c++){
             //For each metric of the ontology we need to find the distance away from the best solution for that metric
-            distance+=Math.pow((ndm[r][c]-posIdeals[c]),2);
+            distance+=Math.pow((wnm[r][c]-posIdeals[c]),2);
 
             }
             distancesFromIdeal[r]=Math.sqrt(distance);
@@ -121,19 +123,19 @@ public class TOPSIS {
     /**
      * Calculates the distances of alternatives from the negative ideal solution.
      * 
-     * @param ndm The normalized decision matrix.
+     * @param wnm The normalized weighted matrix.
      * @return The distances of alternatives from the negative ideal solution.
      */
-    public double[]distancesFromNegativeIdeals(double[][] ndm){
-        double[] negIdeals=negativeIdeals(ndm);
+    public double[]distancesFromNegativeIdeals(double[][] wnm){
+        double[] negIdeals=negativeIdeals(wnm);
         double distance;
-        double[] distancesFromIdeal=new double[ndm.length];
+        double[] distancesFromIdeal=new double[wnm.length];
 
-        for (int r=0;r<ndm.length;r++){
+        for (int r=0;r<wnm.length;r++){
             distance=0;
-          for (int c=0;c<ndm[0].length;c++){
+          for (int c=0;c<wnm[0].length;c++){
             //For each metric of the ontology we need to find the disstance away from the worst solution for that metric
-            distance+=Math.pow((ndm[r][c]-negIdeals[c]),2);
+            distance+=Math.pow((wnm[r][c]-negIdeals[c]),2);
 
             }
             distancesFromIdeal[r]=Math.sqrt(distance);
