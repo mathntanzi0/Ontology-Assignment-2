@@ -18,7 +18,11 @@ public class Electre{
 
     double[][] concodanceDominanceMatrix;
     double[][] discordanceDominanceMatrix;
+
+    int[][] AggregateDominanceMatrix;
+    double[] scores;
 	RankingList rankinglist;
+
 
 
 
@@ -44,6 +48,8 @@ public class Electre{
             this.discordanceMatrix = getDiscordanceMatrix(discordance, weightedMatrix);
             this.concodanceDominanceMatrix = getdominanceMatrix(concodanceMatrix);
             this.discordanceDominanceMatrix = getdominanceMatrix(discordanceMatrix);
+	this.AggregateDominanceMatrix = getAggregateDominanceMatrix(concodanceDominanceMatrix, discordanceDominanceMatrix);
+            this.scores = computeScores(AggregateDominanceMatrix);
             
         } catch (Exception ex) {
             System.out.println("Problem with file");
@@ -132,7 +138,7 @@ public class Electre{
 
         for (int r = 0; r < numRows; r++) {
             for (int c = 0; c < numCols; c++) {
-                weightedMatrix[r][c] = normalizeDecisionMatrix[r][c] * (1/11);
+                weightedMatrix[r][c] = normalizeDecisionMatrix[r][c] * (1.0/11.0);
                 //System.out.print(weightedMatrix[r][c]+"\t");
             }
             //System.out.println("");
@@ -255,7 +261,11 @@ public class Electre{
                     denom = tempDenom;
                 }
             }
-            discMatrix[r][s] = numerator/denom;
+        if (denom != 0) {
+                discMatrix[r][s] = numerator / denom;
+            } else {
+                discMatrix[r][s] = 0;  // or some other handling of zero division
+            }
         }
 
         return discMatrix;
