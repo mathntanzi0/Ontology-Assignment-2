@@ -20,7 +20,7 @@ public class Electre{
     double[][] discordanceDominanceMatrix;
 
     int[][] AggregateDominanceMatrix;
-    double[] scores;
+    int[] scores;
 	RankingList rankinglist;
 
 
@@ -315,19 +315,19 @@ public class Electre{
     }
 
 
-    public double[] computeScores(double[][] decisionMatrix) {
+    public int[] computeScores(double[][] aggMatrix) {
     	int numRows = decisionMatrix.length;
     	int numColumns = decisionMatrix[0].length;
-    	double[] scores = new double[numAlternatives];
+    	int[] scores = new double[aggMatrix.length];
 
     	for (int k = 0; k < numRows; k++) {
-        	double score = 0.0;
+        	int score = 0;
         	for (int i = 0; i < numColumns; i++) {
-            		double sumRows = 0.0;
-            		double sumCols = 0.0;
+            		int sumRows = 0;
+            		int sumCols = 0;
             		for (int j = 0; j < numRows; j++) {
-                		sumRows += decisionMatrix[k][i];
-                		sumCols += decisionMatrix[j][k];
+                		sumRows += aggMatrix[k][i];
+                		sumCols += aggMatrix[j][k];
             		}
             		score += sumRows - sumCols;
         	}
