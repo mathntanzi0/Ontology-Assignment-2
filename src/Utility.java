@@ -1,6 +1,5 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -56,33 +55,21 @@ public class Utility {
 
     }
     /**
-     * Calculates the weights of each criterion using the geometric mean method based on the provided normalized decision matrix.
+     * Calculates the weights of each criterion uniformly based on the number of criteria.
      * 
      * @param normalizeDecisionMatrix The normalized decision matrix.
      * @return The weights of each criterion.
      */
     public static double[] calculateWeights(double[][] normalizeDecisionMatrix) {
         int numCriteria = normalizeDecisionMatrix[0].length;
-        int numAlternatives = normalizeDecisionMatrix.length;
-
-        //Calculate geometric mean
-        double[] geometricMeans = new double[numCriteria];
-        for (int j = 0; j < numCriteria; j++) {
-            double product = 1;
-            for (int i = 0; i < numAlternatives; i++)
-                product *= normalizeDecisionMatrix[i][j];
-            
-            geometricMeans[j] = Math.pow(product, 1.0 / numAlternatives);
-        }
-
-        //Normalize geometric means
-        double sumGeometricMeans = Arrays.stream(geometricMeans).sum();
-        double[] normalizedGeometricMeans = new double[numCriteria];
-        for (int j = 0; j < numCriteria; j++)
-            normalizedGeometricMeans[j] = geometricMeans[j] / sumGeometricMeans;
-
-        return normalizedGeometricMeans;
-    }
+        double[] weights = new double[numCriteria];
+    
+        double value = 1.0 / numCriteria;
+        for (int i = 0; i < numCriteria; i++) 
+            weights[i] = value;
+    
+        return weights;
+    }    
     /**
      * Calculates the weighted normalized matrix by multiplying the normalized decision matrix 
      * with the weights for each criterion.
@@ -131,7 +118,8 @@ public class Utility {
             numCols = Math.max(numCols, values.length);
             numRows++;
         }
-        
+        scanner.close();
+
         scanner = new Scanner(file);
         double[][] decisionMatrix = new double[numRows][numCols-1];
 
@@ -148,7 +136,6 @@ public class Utility {
             Ontology ontology = new Ontology(values[0], metricsValue);
             App.rankinglist.addOntology(ontology);
         }
-
         scanner.close();
         return decisionMatrix;
     }
