@@ -23,11 +23,8 @@ public class TOPSIS {
 
     public TOPSIS(String fileName){
         this.fileName=fileName;
-        apply_TOPSIS(fileName);
     }
-    public void apply_TOPSIS(String fileName){
-
-        this.fileName=fileName;
+    public void rankAlternatives(){
         try {
             this.decisionMatrix= Utility.getDecisionMatrixFromFile(new File(fileName));
         } catch (Exception ex) {
