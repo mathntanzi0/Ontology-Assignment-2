@@ -1,4 +1,6 @@
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -9,7 +11,7 @@ import java.util.*;
  * @author Sithembiso Ntanzi
  * @author Yurvan Ramjan
  * @author ChatGPT
- */
+ * */
 
  
 public class TOPSIS {
@@ -44,9 +46,10 @@ public class TOPSIS {
         //This Function gets the Negative Ideal solutions and then calculates the distance of each metric of the ontolgoy from the ideal solution
         double[] distanceFromNeg=distancesFromNegativeIdeals(weightedNormalizeDecisionMatrix);
         
-        relativeCloseness(distanceFromPos, distanceFromNeg);
+        double[] closenessScores=relativeCloseness(distanceFromPos, distanceFromNeg);
         orderRankingList();
         printRankingList(getRankings());
+        displayOutputToFile(weightedNormalizeDecisionMatrix, distanceFromPos, distanceFromPos, distanceFromPos, distanceFromNeg,closenessScores);
     }
     /**
      * Calculates the positive ideal solution by finding the best value in each column of the decision matrix.
@@ -144,7 +147,7 @@ public class TOPSIS {
      * @param distanceFromNeg The distances of alternatives from the negative ideal solution.
      * @param distanceFromPos The distances of alternatives from the positive ideal solution.
      */
-    public void relativeCloseness(double[] distanceFromNeg,double[] distanceFromPos){
+    public double[] relativeCloseness(double[] distanceFromNeg,double[] distanceFromPos){
         //Relative Closeness Ci for each ontology,is computed based on distance from pos and neg ideal solutions
 
         double[] closeness=new double[distanceFromNeg.length];
@@ -153,6 +156,8 @@ public class TOPSIS {
             closeness[i]=distanceFromNeg[i]/(distanceFromNeg[i]+distanceFromPos[i]);
             App.rankinglist.getOntologies().get(i).setRelativeCloseness(closeness[i]);//Add the closeness score to The relevent Ontology
         }
+
+        return closeness;
     
     }
     /**
@@ -168,6 +173,115 @@ public class TOPSIS {
         for(Ontology o: rankings){
             System.out.println(o.getName()+"  "+o.getRelativeCloseness());
         }
+    }
+    public void displayOutputToFile(double[][] weightedNormalizeDecisionMatrix,double[]positiveIdeals,double[]negativeIdeals ,double[] distanceFromPos,double[] distanceFromNeg,double[]closenessScores){
+
+          String Filename="TOPSIS_output.txt";
+        try{
+                FileWriter writer= new FileWriter(Filename,false);
+                //Display Decsion Matrix
+                writer.write("Decision Matrix: \n");
+                writer.write("\n");
+                for (int r=0;r<decisionMatrix.length;r++){
+                    for (int c=0;c<decisionMatrix[0].length;c++){
+                        writer.write(String.format("%-" +10 + "s",decisionMatrix[r][c])+"\t");
+                    }
+                    writer.write("\n");
+                }
+
+                //Normalised Decision Matrix
+                writer.write("\n");
+
+                writer.write("Normalised Decision Matrix: \n");
+                writer.write("\n");
+                for (int r=0;r<normalizeDecisionMatrix.length;r++){
+                    for (int c=0;c<normalizeDecisionMatrix[0].length;c++){
+                        writer.write(String.format("%-" +20 + "s",normalizeDecisionMatrix[r][c])+"\t");
+                    }
+                    writer.write("\n");
+                }
+                writer.write("\n");
+                writer.write("Weighted Normalised Matrix: \n");
+                writer.write("\n");
+                for (int r=0;r<weightedNormalizeDecisionMatrix.length;r++){
+                    for (int c=0;c<weightedNormalizeDecisionMatrix[0].length;c++){
+                        writer.write(String.format("%-" +21 + "s",weightedNormalizeDecisionMatrix[r][c])+"\t");
+                    }
+                    writer.write("\n");
+                }
+
+                //Positive Ideal Solutions For each Metric
+                writer.write("\n");
+                writer.write("Positive Ideal Solutions: \n");
+                writer.write("\n");
+                for(int i=0;i<positiveIdeals.length;i++){
+                    writer.write(String.valueOf(positiveIdeals[i])+"\n");
+                }
+
+                //Negative Ideal Solutions For each Metric
+                writer.write("\n");
+                writer.write("Negative Ideal Solutions: \n");
+                writer.write("\n");
+                for(int i=0;i<negativeIdeals.length;i++){
+                    writer.write(String.valueOf(negativeIdeals[i])+"\n");
+                }
+
+                //Distance from Positive Ideal Solutions
+                writer.write("\n");
+                writer.write("Distance From Positive Ideal Solutions: \n");
+                writer.write("\n");
+                for(int i=0;i<distanceFromPos.length;i++){
+                    String ontology="Ontology "+ (i+1);
+                    String distance=String.valueOf(distanceFromPos[i]);
+                    String line= String.format("%-15s %10s%n",ontology,distance);
+                    writer.write(line);
+                    
+                }
+                //Distance from Negative Ideal Solutions
+
+                writer.write("\n");
+                writer.write("Distance From Negative Ideal Solutions: \n");
+                writer.write("\n");
+                for(int i=0;i<distanceFromNeg.length;i++){
+                    String ontology="Ontology "+ (i+1);
+                    String distance=String.valueOf(distanceFromNeg[i]);
+                    String line= String.format("%-15s %10s%n",ontology,distance);
+                    writer.write(line);
+                    
+                }
+
+                //Relative Closeness Scores
+
+                writer.write("\n");
+                writer.write("Closeness Scores of Ontologies: \n");
+                writer.write("\n");
+                for(int i=0;i<closenessScores.length;i++){
+                    String ontology="Ontology "+ (i+1);
+                    String distance=String.valueOf(closenessScores[i]);
+                    String line= String.format("%-15s %10s%n",ontology,distance);
+                    writer.write(line);
+                   
+                }
+
+                //Print Ranked List
+                writer.write("\n");
+                writer.write("Ranked List: \n");
+                writer.write("\n");
+                for(Ontology o: App.rankinglist.getOntologies()){
+                    String ontology=o.getName();
+                    String distance=String.valueOf(o.getRelativeCloseness());
+                    String line= String.format("%-15s %10s%n",ontology,distance);
+                    writer.write(line);
+                }
+
+                writer.close();
+        }
+        catch(IOException e){
+                System.out.print("Problem displaying outputs to tetxfile");
+        }
+
+        
+
     }
     /**
      * Orders the ranking list of ontologies based on their relative closeness scores.
