@@ -12,6 +12,7 @@ import java.util.Scanner;
  */
 
 public class Utility {
+    
     /**
      * Normalizes the decision matrix by dividing each element of the matrix by the normalizing constant of its column.
      * 
@@ -31,6 +32,7 @@ public class Utility {
         }
         return normalizedDecisionMatrix;
     }
+    
     /**
      * Calculates the normalizing constants for each column of the decision matrix.
      * Each column has its own normalizing constant.
@@ -54,6 +56,7 @@ public class Utility {
         return normalising_constants;
 
     }
+   
     /**
      * Calculates the weights of each criterion uniformly based on the number of criteria.
      * 
@@ -70,6 +73,7 @@ public class Utility {
     
         return weights;
     }    
+   
     /**
      * Calculates the weighted normalized matrix by multiplying the normalized decision matrix 
      * with the weights for each criterion.
@@ -90,6 +94,7 @@ public class Utility {
         }
         return weightedMatrix;
     }
+   
     /**
     * Calculates the weighted normalized matrix using the weights calculated with the geometric mean method.
     * 
@@ -100,6 +105,7 @@ public class Utility {
         double[] weights = calculateWeights(normalizeDecisionMatrix);
         return weightedNormalizedMatrix(normalizeDecisionMatrix, weights);
     }
+   
     /**
      * Reads a decision matrix from the given file and returns it.
      * 
@@ -108,6 +114,7 @@ public class Utility {
      * @throws FileNotFoundException If the file is not found.
      */
     public static double[][] getDecisionMatrixFromFile(File file) throws FileNotFoundException {
+        App.rankinglist = new RankingList();
         Scanner scanner = new Scanner(file);
         int numRows = 0;
         int numCols = 0;
