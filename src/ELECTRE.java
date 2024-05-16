@@ -561,7 +561,7 @@ public class Electre{
         for(int i=0;i<scores.length;i++){
             ontologies.get(i).setScore(scores[i]);
         }
-        rankinglist.sortRankingList();
+        rankinglist.sortRankingListASC();
         /* 
         for(int i=0;i<scores.length;i++){
             System.out.println(ontologies.get(i).name+" : "+ontologies.get(i).score);
