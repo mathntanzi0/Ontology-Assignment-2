@@ -283,6 +283,6 @@ public class TOPSIS {
      * Orders the ranking list of ontologies based on their relative closeness scores.
      */
     public void orderRankingList(){
-        App.rankinglist.sortRankingList();
+        App.rankinglist.rankListDesc();
     }
 }
