@@ -13,7 +13,7 @@ import java.util.*;
  * */
 
 public class Electre{ 
-
+//variables for the algorithm
 	String fileName; 
     double[][] decisionMatrix; 
     double[][] normalizeDecisionMatrix; 
@@ -32,10 +32,10 @@ public class Electre{
     public Electre(String fileName){ 
         this.fileName=fileName; 
         apply_Electre(fileName); 
-
+//constructor
     } 
 
-    public void apply_Electre(String fileName){ 
+    public void apply_Electre(String fileName){ //This method will determine the output results
         rankinglist=new RankingList(); 
         this.fileName=fileName; 
         try { 
@@ -69,7 +69,7 @@ public class Electre{
 
      
     public void displayOutputToFile(double[][] weightedNormalizeDecisionMatrix){
-
+//This method will add all the results of each method into a textfile
         String Filename="ELECTRE_output.txt";
       try{
               FileWriter writer= new FileWriter(Filename,false);
@@ -211,7 +211,7 @@ public class Electre{
 
     }
 
-
+//will read the dataset and create the initial matrix
 	public double[][] buildDecisonMatrix(String fileName) throws Exception{ 
         File file = new File(fileName); 
         Scanner scanner = new Scanner(file); 
@@ -241,7 +241,7 @@ public class Electre{
 	}//eof 
 
 	 
-
+//will normalise the initial matrix
 	public  double[][] normalizeDecisionMatrix(double[][] decisionMatrix){ 
         double []normalising_constant= calculateNormalisingConstants(decisionMatrix); 
         //Divide Each element of the Decision Matrix by the Normalising Constant of its Column 
@@ -275,6 +275,7 @@ public class Electre{
         return normalising_constants; 
     } 
 
+//this function will return the matrix after being multiplied by the weights
     public static double[][] weightedNormalizedMatrix(double[][] normalizeDecisionMatrix, double[] weights) { 
         int numRows = normalizeDecisionMatrix.length; 
         int numCols = normalizeDecisionMatrix[0].length; 
@@ -320,7 +321,7 @@ public class Electre{
     } 
 
   
-
+//the concordance is calculated
     public HashMap<String, ArrayList<Integer>> getConcordance(double[][] weighteddMatrix){ 
         HashMap<String, ArrayList<Integer>> x = new HashMap<String, ArrayList<Integer>>(); 
         for (int r = 0; r < 50; r++) { 
@@ -361,7 +362,7 @@ public class Electre{
         return x; 
     }//eof 
 
-
+//the discordance is calculated
     public HashMap<String, ArrayList<Integer>> getDiscordance(double[][] weighteddMatrix){ 
         HashMap<String, ArrayList<Integer>> x = new HashMap<String, ArrayList<Integer>>(); 
         for (int r = 0; r < 50; r++) { 
