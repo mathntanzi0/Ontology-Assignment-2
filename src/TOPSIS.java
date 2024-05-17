@@ -58,8 +58,12 @@ public class TOPSIS {
         //weightedNormalizedMatrix(normalizeDecisionMatrix)
 
         double[][] weightedNormalizeDecisionMatrix = Utility.weightedNormalizedMatrix(normalizeDecisionMatrix);
+        double[] positiveIdeal=positiveIdeal(weightedNormalizeDecisionMatrix);
+        double[] negativeIdeal=negativeIdeals(weightedNormalizeDecisionMatrix);
+      
         
-        //This Function gets the Positive Ideal solutions and then calculates the distance of each metric of the ontolgoy from the ideal solution
+        
+      //This Function gets the Positive Ideal solutions and then calculates the distance of each metric of the ontolgoy from the ideal solution
         double [] distanceFromPos=distancesFromPositiveIdeals(weightedNormalizeDecisionMatrix);
         
         //This Function gets the Negative Ideal solutions and then calculates the distance of each metric of the ontolgoy from the ideal solution
@@ -68,7 +72,7 @@ public class TOPSIS {
         double[] closenessScores=relativeCloseness(distanceFromPos, distanceFromNeg);
         orderRankingList();
         printRankingList(getRankings());
-        displayOutputToFile(weightedNormalizeDecisionMatrix, distanceFromPos, distanceFromPos, distanceFromPos, distanceFromNeg,closenessScores);
+        displayOutputToFile(weightedNormalizeDecisionMatrix, positiveIdeal, negativeIdeal, distanceFromPos, distanceFromNeg,closenessScores);
     }
     
     /**
