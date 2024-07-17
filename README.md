@@ -1,18 +1,23 @@
-## Getting Started
+# Multi-Attribute Decision-Making (MADM) Techniques in Ontology Ranking
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## Introduction
+This project implements two Multi-Criteria Decision-Making (MCDM) techniques, focusing on two Multi-Attribute Decision-Making (MADM) methods: **Elimination and Choice Expressing Reality (ELECTRE)** and **Technique for Order Preference by Similarity to Ideal Solution (TOPSIS)**.
 
-## Folder Structure
+This study implements and compares the performance of these techniques in ontology ranking. The dataset used in this project contains 50 ontologies and 11 quality metrics.
 
-The workspace contains two folders by default, where:
+## Quality Metrics
+The set of quality metrics used to evaluate the ontologies includes:
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+- **Absolute Root Cardinality (ARC)**: Quantifies the total number of root concepts in the ontology.
+- **Absolute Leaf Cardinality (ALC)**: Measures the total count of leaf concepts.
+- **Average Depth (AVD)**: Captures the average depth of concepts in the hierarchy.
+- **Maximum Depth (MXD)**: Highlights the deepest level of specialisation.
+- **Average Breadth (AVB)**: Indicates the average number of immediate children for each concept.
+- **Maximum Breadth (MXB)**: Indicates the maximum number of immediate children for each concept.
+- **Average Population (AVP)**: Reflects the average number of instances associated with each concept.
+- **Class Richness (CR)**: Gauges the diversity of classes within the ontology.
+- **Attribute Richness (AR)**: Gauges the diversity of attributes within the ontology.
+- **Inheritance Richness (IR)**: Gauges the diversity of inheritance relationships within the ontology.
+- **Relationship Richness (RR)**: Gauges the diversity of semantic associations within the ontology.
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+These metrics collectively provide a framework for assessing the quality and effectiveness of ontologies.
